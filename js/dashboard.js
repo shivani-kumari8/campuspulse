@@ -1,0 +1,1 @@
+console.log("Campus Pulse Dashboard loaded successfully.");
