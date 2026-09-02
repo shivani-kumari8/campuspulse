@@ -53,13 +53,53 @@ function markAffected(id) {
   );
 
   if (!complaint) {
-    return false;
+    return {
+      success: false,
+      message: 'Complaint not found.'
+    };
   }
 
+  // Create an anonymous ID for this browser/student
+  let studentId = localStorage.getItem('campusPulseStudentId');
+
+  if (!studentId) {
+    studentId =
+      'STU-' +
+      Date.now() +
+      '-' +
+      Math.random().toString(36).substring(2, 8);
+
+    localStorage.setItem(
+      'campusPulseStudentId',
+      studentId
+    );
+  }
+
+  // Create affectedBy array if it doesn't exist
+  if (!complaint.affectedBy) {
+    complaint.affectedBy = [];
+  }
+
+  // Check whether this student already clicked
+  if (complaint.affectedBy.includes(studentId)) {
+    return {
+      success: false,
+      message: 'You have already marked yourself as affected.'
+    };
+  }
+
+  // Add this student
+  complaint.affectedBy.push(studentId);
+
+  // Keep affectedCount synchronized
   complaint.affectedCount =
-    (complaint.affectedCount || 0) + 1;
+    complaint.affectedBy.length;
 
   saveComplaints(complaints);
 
-  return true;
+  return {
+    success: true,
+    message: 'You are now marked as affected.',
+    affectedCount: complaint.affectedCount
+  };
 }

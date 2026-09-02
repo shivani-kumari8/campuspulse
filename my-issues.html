@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Campus Pulse | My Issues</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4b5563;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .profile {
+            width: 38px;
+            height: 38px;
+            background: #2563eb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* MAIN */
+        .container {
+            width: 86%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #6b7280;
+        }
+
+        .report-btn {
+            background: #2563eb;
+            color: white;
+            padding: 13px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .report-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* FILTERS */
+        .filters {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            border: 1px solid #e5e7eb;
+        }
+
+        .filters select {
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            background: white;
+            color: #374151;
+        }
+
+        /* ISSUE CARDS */
+        .issues {
+            display: grid;
+            gap: 18px;
+        }
+
+        .issue-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 22px;
+            transition: 0.2s;
+        }
+
+        .issue-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+        }
+
+        .issue-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .issue-title {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .issue-location {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .status {
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .reported {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        .progress {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .resolved {
+            background: #ecfdf5;
+            color: #059669;
+        }
+
+        .issue-description {
+            color: #4b5563;
+            margin: 18px 0;
+            line-height: 1.5;
+        }
+
+        .issue-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 15px;
+        }
+
+        .affected {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .view-btn {
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .view-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* EMPTY STATE */
+        .empty {
+            display: none;
+            text-align: center;
+            background: white;
+            padding: 50px 20px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .empty h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #6b7280;
+        }
+
+        /* MOBILE */
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
+            }
+
+            .issue-top {
+                flex-direction: column;
+            }
+
+            .issue-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <div class="logo">
+            Campus Pulse
+        </div>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="report-issue.html">Report Issue</a>
+            <a href="my-issues.html">My Issues</a>
+            <a href="all-issues.html">All Issues</a>
+        </div>
+
+        <div class="profile">
+            N
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="container">
+
+        <div class="page-header">
+
+            <div>
+                <h1>My Issues</h1>
+                <p>Track the issues you have reported on campus.</p>
+            </div>
+
+            <a href="report-issue.html" class="report-btn">
+                + Report an Issue
+            </a>
+
+        </div>
+
+
+        <!-- FILTERS -->
+        <div class="filters">
+
+            <select id="statusFilter">
+                <option value="all">All Statuses</option>
+                <option value="reported">Reported</option>
+                <option value="progress">In Progress</option>
+                <option value="resolved">Resolved</option>
+            </select>
+
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="hostel">Hostel</option>
+                <option value="washroom">Washroom</option>
+                <option value="wifi">Wi-Fi</option>
+                <option value="mess">Mess</option>
+                <option value="electricity">Electricity</option>
+                <option value="classroom">Classroom</option>
+            </select>
+
+        </div>
+
+
+        <!-- ISSUES -->
+        <section class="issues" id="issues">
+        </section>
+
+
+        <!-- EMPTY STATE -->
+        <div class="empty" id="emptyState">
+
+            <h2>No issues found</h2>
+
+            <p>
+                Try changing your filters or report a new campus issue.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+     <script src="data.js"></script>
+
+    <script>
+
+        const statusFilter = document.getElementById("statusFilter");
+        const categoryFilter = document.getElementById("categoryFilter");
+        const issuesContainer = document.getElementById("issues");
+        const emptyState = document.getElementById("emptyState");
+
+        function renderIssues() {
+            const complaints = getComplaints();
+
+            const selectedStatus = statusFilter.value;
+            const selectedCategory = categoryFilter.value;
+
+            const filteredIssues = complaints.filter(issue => {
+                const issueStatus = issue.status.toLowerCase();
+                const issueCategory = issue.category.toLowerCase();
+
+            const statusMatches =
+                selectedStatus === "all" ||
+                issueStatus === selectedStatus ||
+                (selectedStatus === "progress" &&
+                issueStatus === "under process");
+
+                const categoryMatches =
+                    selectedCategory === "all" ||
+                    issueCategory === selectedCategory;
+
+                return statusMatches && categoryMatches;
+            });
+
+            issuesContainer.innerHTML = "";
+
+            if (filteredIssues.length === 0) {
+                emptyState.style.display = "block";
+                return;
+            }
+
+            emptyState.style.display = "none";
+
+            filteredIssues.forEach(issue => {
+                let statusClass = "reported";
+
+                if (issue.status === "Under Process") {
+                    statusClass = "progress";
+                }
+
+                if (issue.status === "Resolved") {
+                    statusClass = "resolved";
+                }
+
+                const card = document.createElement("div");
+
+                card.className = "issue-card";
+
+                card.innerHTML = `
+                    <div class="issue-top">
+                        <div>
+                            <div class="issue-title">
+                                ${issue.category}
+                            </div>
+
+                            <div class="issue-location">
+                                📍 ${issue.block}, ${issue.floor}
+                            </div>
+                        </div>
+
+                        <span class="status ${statusClass}">
+                            ${issue.status}
+                        </span>
+                    </div>
+
+                    <p class="issue-description">
+                        ${issue.details}
+                    </p>
+
+                    <div class="issue-bottom">
+                        <span class="affected">
+                            👥 ${issue.affectedCount || 1} students affected
+                        </span>
+
+                        <a href="#" class="view-btn"
+                        onclick="viewIssue('${issue.id}'); return false;">
+                            View Details →
+                        </a>
+                    </div>
+                `;
+
+                issuesContainer.appendChild(card);
+            });
+        }
+
+        function viewIssue(id) {
+            window.location.href =
+                `issue-details.html?id=${encodeURIComponent(id)}`;
+        }
+
+        statusFilter.addEventListener("change", renderIssues);
+        categoryFilter.addEventListener("change", renderIssues);
+
+        renderIssues();
+            
+        categoryFilter.addEventListener("change", filterIssues);
+
+    </script>
+
+</body>
+</html>
