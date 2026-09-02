@@ -592,87 +592,157 @@
     // Handle Complaint Submission
     function handleComplaintSubmit(e) {
       e.preventDefault();
-      const newId = 'CP-' + Math.floor(100 + Math.random() * 900);
-      alert('Complaint Registered Successfully!\n\nYour Tracking ID: ${newId}\nYou can use this ID in the "Review Last Complaint" tab.');
-      closeModal('complaintModal');
-      document.getElementById('complaintForm').reset();
-    }
 
-    // Mock Ticket Database for Review Lookup
-    const mockTickets = {
-      "CP-101": {
-        category: "Washroom Hygiene",
-        location: "Admin Block, Ground Floor",
-        status: "Waiting",
-        statusClass: "badge-waiting",
-        timeline: [
-          { text: "Complaint Logged", date: "Yesterday at 04:20 PM" },
-          { text: "Awaiting Cleaning Staff Allocation", date: "Yesterday at 04:30 PM" }
-        ]
-      },
-      "CP-102": {
-        category: "Plumbing (Broken Tap)",
-        location: "Science Block B, 2nd Floor",
-        status: "Under Process",
-        statusClass: "badge-process",
-        timeline: [
-          { text: "Complaint Logged", date: "Today at 10:30 AM" },
-          { text: "Assigned to Maintenance (Plumber dispatched)", date: "Today at 11:15 AM" }
-        ]
-      },
-      "CP-103": {
-        category: "Electrical (Fan Repaired)",
-        location: "Library Reading Hall 1",
-        status: "Issue Resolved",
-        statusClass: "badge-resolved",
-        timeline: [
-          { text: "Complaint Logged", date: "Aug 29, 2026" },
-          { text: "Electrician Assigned", date: "Aug 29, 2026" },
-          { text: "Capacitor replaced & verified", date: "Aug 30, 2026" }
-        ]
-      }
+      // Generate a unique complaint ID
+      const newId = 'CP-' + Date.now().toString().slice(-6);
+
+      // Get the selected severity
+      const selectedSeverity = document.querySelector(
+        'input[name="severity"]:checked'
+      );
+
+    // Create the complaint object
+      const complaint = {
+      id: newId,
+      category: document.getElementById('category').value,
+      block: document.getElementById('block').value,
+      floor: document.getElementById('floor').value,
+      severity: selectedSeverity ? selectedSeverity.value : 'Low',
+      details: document.getElementById('details').value,
+      status: 'Reported',
+      affectedCount: 1,
+      date: new Date().toLocaleString(),
+
+      timeline: [
+        {
+          text: 'Complaint Logged',
+          date: new Date().toLocaleString()
+        }
+      ]
     };
 
+  // Get existing complaints from localStorage
+      const complaints =
+        JSON.parse(localStorage.getItem('campusPulseComplaints')) || [];
+
+  // Add the new complaint
+      complaints.push(complaint);
+
+  // Save the updated complaints list
+      localStorage.setItem(
+        'campusPulseComplaints',
+        JSON.stringify(complaints)
+      );
+
+  // Tell the student their complaint was successfully saved
+      alert(
+        `Complaint Registered Successfully!\n\n` +
+        `Your Tracking ID: ${newId}\n\n` +
+        `You can use this ID in the "Review Last Complaint" tab.`
+      );
+
+  // Close modal
+      closeModal('complaintModal');
+
+  // Clear the form
+      document.getElementById('complaintForm').reset();
+}
+
     function searchTicket() {
-      const id = document.getElementById('ticketInput').value.trim().toUpperCase();
+      const id = document
+        .getElementById('ticketInput')
+        .value
+        .trim()
+        .toUpperCase();
+
       const resultArea = document.getElementById('ticketResult');
 
       if (!id) {
-        alert("Please enter a ticket ID.");
+        alert('Please enter a ticket ID.');
         return;
       }
 
-      if (mockTickets[id]) {
-        const ticket = mockTickets[id];
-        let timelineHtml = ticket.timeline.map(item => `
-          <div class="timeline-item">
-            <div><strong>${item.text}</strong></div>
-            <div class="timeline-date">${item.date}</div>
-          </div>
-        `).join('');
+  // Get complaints saved in localStorage
+      const complaints =
+        JSON.parse(localStorage.getItem('campusPulseComplaints')) || [];
 
-        resultArea.innerHTML = `
-          <div class="ticket-card">
-            <div class="ticket-header">
-              <strong>Ticket #${id}</strong>
-              <span class="badge ${ticket.statusClass}">${ticket.status}</span>
-            </div>
-            <p style="font-size: 0.9rem; margin-bottom: 0.35rem;"><strong>Issue:</strong> ${ticket.category}</p>
-            <p style="font-size: 0.9rem; color: var(--text-muted);"><strong>Location:</strong> ${ticket.location}</p>
-            <div class="timeline">
-              ${timelineHtml}
-            </div>
-          </div>
-        `;
-      } else {
+  // Find the complaint with this ID
+      const ticket = complaints.find(
+        complaint => complaint.id === id
+      );
+
+  // Complaint not found
+      if (!ticket) {
         resultArea.innerHTML = `
           <div class="ticket-card" style="text-align: center; color: var(--text-muted);">
-            <p>No complaint found with ID: <strong>${id}</strong></p>
-            <p style="font-size: 0.8rem; margin-top: 0.25rem;">Try test IDs: <code>CP-101</code>, <code>CP-102</code>, or <code>CP-103</code></p>
+            <p>
+              No complaint found with ID:
+              <strong>${id}</strong>
+            </p>
+            <p style="font-size: 0.8rem; margin-top: 0.25rem;">
+              Please check your Tracking ID and try again.
+            </p>
           </div>
         `;
+        return;
       }
-    }
+
+  // Choose status badge
+      let statusClass = 'badge-waiting';
+
+      if (ticket.status === 'Under Process') {
+        statusClass = 'badge-process';
+      }
+
+      if (ticket.status === 'Resolved') {
+        statusClass = 'badge-resolved';
+      }
+
+  // Build timeline
+      const timelineHtml = ticket.timeline.map(item => `
+        <div class="timeline-item">
+          <div><strong>${item.text}</strong></div>
+          <div class="timeline-date">${item.date}</div>
+        </div>
+      `).join('');
+
+  // Display complaint
+      resultArea.innerHTML = `
+        <div class="ticket-card">
+
+          <div class="ticket-header">
+            <strong>Ticket #${ticket.id}</strong>
+
+            <span class="badge ${statusClass}">
+              ${ticket.status}
+            </span>
+          </div>
+
+          <p style="font-size: 0.9rem; margin-bottom: 0.35rem;">
+            <strong>Issue:</strong> ${ticket.category}
+          </p>
+
+          <p style="font-size: 0.9rem; color: var(--text-muted);">
+            <strong>Location:</strong>
+            ${ticket.block}, ${ticket.floor}
+          </p>
+
+          <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+            <strong>Severity:</strong> ${ticket.severity}
+          </p>
+
+          <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+            <strong>Details:</strong> ${ticket.details}
+          </p>
+
+          <div class="timeline">
+            ${timelineHtml}
+          </div>
+
+        </div>
+      `;
+    }    
+
   </script>
 
 </body>
