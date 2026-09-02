@@ -563,6 +563,8 @@
     </div>
   </div>
 
+  <script src="data.js"></script>
+
   <script>
     // Intro overlay click dismiss
     const introOverlay = document.getElementById('introOverlay');
@@ -593,33 +595,45 @@
     function handleComplaintSubmit(e) {
       e.preventDefault();
 
-      // Generate a unique complaint ID
       const newId = 'CP-' + Date.now().toString().slice(-6);
 
-      // Get the selected severity
       const selectedSeverity = document.querySelector(
         'input[name="severity"]:checked'
       );
 
-    // Create the complaint object
       const complaint = {
-      id: newId,
-      category: document.getElementById('category').value,
-      block: document.getElementById('block').value,
-      floor: document.getElementById('floor').value,
-      severity: selectedSeverity ? selectedSeverity.value : 'Low',
-      details: document.getElementById('details').value,
-      status: 'Reported',
-      affectedCount: 1,
-      date: new Date().toLocaleString(),
+        id: newId,
+        category: document.getElementById('category').value,
+        block: document.getElementById('block').value,
+        floor: document.getElementById('floor').value,
+        severity: selectedSeverity
+          ? selectedSeverity.value
+          : 'Low',
+        details: document.getElementById('details').value,
+        status: 'Reported',
+        affectedCount: 1,
+        date: new Date().toLocaleString(),
 
-      timeline: [
-        {
-          text: 'Complaint Logged',
-          date: new Date().toLocaleString()
-        }
-      ]
-    };
+        timeline: [
+          {
+            text: 'Complaint Logged',
+            date: new Date().toLocaleString()
+          }
+        ]
+      };
+
+  // Save using the shared data function
+      addComplaint(complaint);
+
+      alert(
+        `Complaint Registered Successfully!\n\n` +
+        `Your Tracking ID: ${newId}\n\n` +
+        `You can use this ID in the "Review Last Complaint" tab.`
+      );
+
+      closeModal('complaintModal');
+      document.getElementById('complaintForm').reset();
+    }
 
   // Get existing complaints from localStorage
       const complaints =
@@ -646,7 +660,7 @@
 
   // Clear the form
       document.getElementById('complaintForm').reset();
-}
+    
 
     function searchTicket() {
       const id = document
@@ -743,6 +757,7 @@
       `;
     }    
 
+  
   </script>
 
 </body>
