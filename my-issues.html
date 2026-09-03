@@ -1,74 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Campus Pulse | My Issues</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
+
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
-            background: #f5f7fb;
-            color: #1f2937;
+            background: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
         }
 
         /* NAVBAR */
+
         .navbar {
             height: 70px;
             background: white;
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 7%;
-            border-bottom: 1px solid #e5e7eb;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2563eb;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
         }
 
         .nav-links {
             display: flex;
-            gap: 30px;
-            align-items: center;
+            gap: 28px;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #4b5563;
-            font-size: 15px;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
         }
 
-        .nav-links a:hover {
-            color: #2563eb;
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
         }
 
         .profile {
             width: 38px;
             height: 38px;
-            background: #2563eb;
-            color: white;
             border-radius: 50%;
+            background: var(--primary);
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 600;
         }
 
         /* MAIN */
+
         .container {
-            width: 86%;
-            max-width: 1200px;
-            margin: 40px auto;
+            max-width: 1100px;
+            margin: auto;
+            padding: 40px 24px;
         }
 
         .page-header {
@@ -79,168 +101,156 @@
         }
 
         .page-header h1 {
-            font-size: 32px;
+            font-size: 2rem;
             margin-bottom: 8px;
         }
 
         .page-header p {
-            color: #6b7280;
+            color: var(--text-muted);
         }
 
         .report-btn {
-            background: #2563eb;
+            background: var(--primary);
             color: white;
-            padding: 13px 20px;
+            padding: 12px 18px;
             border-radius: 8px;
             text-decoration: none;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: 600;
         }
 
         .report-btn:hover {
-            background: #1d4ed8;
+            background: var(--primary-dark);
         }
 
         /* FILTERS */
+
         .filters {
-            background: white;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
             padding: 18px;
-            border-radius: 12px;
-            margin-bottom: 25px;
+            margin-bottom: 22px;
             display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            border: 1px solid #e5e7eb;
+            gap: 14px;
         }
 
         .filters select {
             padding: 10px 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 7px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
             background: white;
-            color: #374151;
+            color: var(--text-main);
+            font-size: 14px;
         }
 
         /* ISSUE CARDS */
+
         .issues {
             display: grid;
-            gap: 18px;
+            gap: 16px;
         }
 
         .issue-card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
             padding: 22px;
             transition: 0.2s;
         }
 
         .issue-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
         }
 
         .issue-top {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
             gap: 15px;
         }
 
         .issue-title {
-            font-size: 19px;
-            font-weight: bold;
-            margin-bottom: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 7px;
         }
 
         .issue-location {
-            color: #6b7280;
-            font-size: 14px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
 
         .status {
-            padding: 6px 11px;
+            padding: 5px 10px;
             border-radius: 20px;
-            font-size: 13px;
-            font-weight: bold;
+            font-size: 0.75rem;
+            font-weight: 600;
             white-space: nowrap;
         }
 
         .reported {
-            background: #fff7ed;
-            color: #c2410c;
+            background: #fef3c7;
+            color: #92400e;
         }
 
-        .progress {
-            background: #eff6ff;
-            color: #2563eb;
+        .progress-status {
+            background: #e0f2fe;
+            color: #0369a1;
         }
 
         .resolved {
-            background: #ecfdf5;
-            color: #059669;
+            background: #dcfce7;
+            color: #15803d;
         }
 
         .issue-description {
-            color: #4b5563;
-            margin: 18px 0;
-            line-height: 1.5;
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.9rem;
+            margin: 16px 0;
         }
 
         .issue-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #f0f0f0;
-            padding-top: 15px;
         }
 
         .affected {
-            color: #6b7280;
-            font-size: 14px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
 
         .view-btn {
             text-decoration: none;
-            color: #2563eb;
-            font-weight: bold;
-            font-size: 14px;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
-        .view-btn:hover {
-            text-decoration: underline;
-        }
+        /* EMPTY */
 
-        /* EMPTY STATE */
         .empty {
             display: none;
-            text-align: center;
             background: white;
-            padding: 50px 20px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-        }
-
-        .empty h2 {
-            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 50px;
+            text-align: center;
         }
 
         .empty p {
-            color: #6b7280;
+            color: var(--text-muted);
+            margin-top: 8px;
         }
 
-        /* MOBILE */
         @media (max-width: 700px) {
-
-            .navbar {
-                padding: 0 5%;
-            }
 
             .nav-links {
                 display: none;
-            }
-
-            .container {
-                width: 92%;
             }
 
             .page-header {
@@ -249,50 +259,59 @@
                 gap: 18px;
             }
 
-            .issue-top {
-                flex-direction: column;
-            }
-
+            .issue-top,
             .issue-bottom {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 10px;
             }
+
+            .container {
+                padding: 25px 16px;
+            }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
     <!-- NAVBAR -->
+
     <nav class="navbar">
 
-        <div class="logo">
-            Campus Pulse
-        </div>
+        <div class="logo">Campus Pulse</div>
 
         <div class="nav-links">
-            <a href="index.html">Home</a>
+
+            <a href="dashboard.html">Dashboard</a>
             <a href="report-issue.html">Report Issue</a>
-            <a href="my-issues.html">My Issues</a>
+            <a href="my-issues.html" class="active">My Issues</a>
             <a href="all-issues.html">All Issues</a>
+
         </div>
 
-        <div class="profile">
-            N
-        </div>
+        <div class="profile">N</div>
 
     </nav>
 
 
-    <!-- MAIN CONTENT -->
+    <!-- MAIN -->
+
     <main class="container">
 
         <div class="page-header">
 
             <div>
+
                 <h1>My Issues</h1>
-                <p>Track the issues you have reported on campus.</p>
+
+                <p>
+                    Track and manage the issues you have reported.
+                </p>
+
             </div>
 
             <a href="report-issue.html" class="report-btn">
@@ -303,40 +322,193 @@
 
 
         <!-- FILTERS -->
+
         <div class="filters">
 
             <select id="statusFilter">
+
                 <option value="all">All Statuses</option>
-                <option value="reported">Reported</option>
-                <option value="progress">In Progress</option>
+                <option value="reported">Waiting</option>
+                <option value="progress">Under Process</option>
                 <option value="resolved">Resolved</option>
+
             </select>
 
+
             <select id="categoryFilter">
+
                 <option value="all">All Categories</option>
                 <option value="hostel">Hostel</option>
                 <option value="washroom">Washroom</option>
                 <option value="wifi">Wi-Fi</option>
                 <option value="mess">Mess</option>
-                <option value="electricity">Electricity</option>
+                <option value="electricity">Electrical</option>
                 <option value="classroom">Classroom</option>
+
             </select>
 
         </div>
 
 
         <!-- ISSUES -->
+
         <section class="issues" id="issues">
+
+
+            <div class="issue-card"
+                 data-status="progress"
+                 data-category="wifi">
+
+                <div class="issue-top">
+
+                    <div>
+
+                        <div class="issue-title">
+                            CP-104 — Wi-Fi not working in Block A
+                        </div>
+
+                        <div class="issue-location">
+                            Academic Block A
+                        </div>
+
+                    </div>
+
+                    <span class="status progress-status">
+                        Under Process
+                    </span>
+
+                </div>
+
+
+                <p class="issue-description">
+
+                    The Wi-Fi connection has been unstable for the past few days,
+                    making it difficult for students to access online resources.
+
+                </p>
+
+
+                <div class="issue-bottom">
+
+                    <span class="affected">
+                        42 students affected
+                    </span>
+
+                    <a href="#" class="view-btn">
+                        View Details →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="issue-card"
+                 data-status="reported"
+                 data-category="washroom">
+
+                <div class="issue-top">
+
+                    <div>
+
+                        <div class="issue-title">
+                            CP-103 — Washroom maintenance required
+                        </div>
+
+                        <div class="issue-location">
+                            Block B • 2nd Floor
+                        </div>
+
+                    </div>
+
+                    <span class="status reported">
+                        Waiting
+                    </span>
+
+                </div>
+
+
+                <p class="issue-description">
+
+                    Several taps are not functioning properly and the washroom
+                    requires cleaning and maintenance.
+
+                </p>
+
+
+                <div class="issue-bottom">
+
+                    <span class="affected">
+                        27 students affected
+                    </span>
+
+                    <a href="#" class="view-btn">
+                        View Details →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="issue-card"
+                 data-status="resolved"
+                 data-category="electricity">
+
+                <div class="issue-top">
+
+                    <div>
+
+                        <div class="issue-title">
+                            CP-102 — Lights not working in classroom
+                        </div>
+
+                        <div class="issue-location">
+                            Room 204
+                        </div>
+
+                    </div>
+
+                    <span class="status resolved">
+                        Resolved
+                    </span>
+
+                </div>
+
+
+                <p class="issue-description">
+
+                    Two ceiling lights were not working during evening classes.
+                    The issue has now been resolved.
+
+                </p>
+
+
+                <div class="issue-bottom">
+
+                    <span class="affected">
+                        18 students affected
+                    </span>
+
+                    <a href="#" class="view-btn">
+                        View Details →
+                    </a>
+
+                </div>
+
+            </div>
+
         </section>
 
 
-        <!-- EMPTY STATE -->
         <div class="empty" id="emptyState">
 
             <h2>No issues found</h2>
 
             <p>
-                Try changing your filters or report a new campus issue.
+                Try changing your filters.
             </p>
 
         </div>
@@ -344,111 +516,87 @@
     </main>
 
 
-    <!-- JAVASCRIPT -->
-     <script src="data.js"></script>
-
     <script>
 
-        const statusFilter = document.getElementById("statusFilter");
-        const categoryFilter = document.getElementById("categoryFilter");
-        const issuesContainer = document.getElementById("issues");
-        const emptyState = document.getElementById("emptyState");
+        const statusFilter =
+            document.getElementById("statusFilter");
 
-        function renderIssues() {
-            const complaints = getComplaints();
+        const categoryFilter =
+            document.getElementById("categoryFilter");
+
+        const issues =
+            document.querySelectorAll(".issue-card");
+
+        const emptyState =
+            document.getElementById("emptyState");
+
+
+        function filterIssues() {
 
             const selectedStatus = statusFilter.value;
-            const selectedCategory = categoryFilter.value;
 
-            const filteredIssues = complaints.filter(issue => {
-                const issueStatus = issue.status.toLowerCase();
-                const issueCategory = issue.category.toLowerCase();
+            const selectedCategory =
+                categoryFilter.value;
 
-            const statusMatches =
-                selectedStatus === "all" ||
-                issueStatus === selectedStatus ||
-                (selectedStatus === "progress" &&
-                issueStatus === "under process");
+            let visibleIssues = 0;
 
-                const categoryMatches =
+
+            issues.forEach(issue => {
+
+                const status = issue.dataset.status;
+
+                const category =
+                    issue.dataset.category;
+
+
+                const statusMatch =
+                    selectedStatus === "all" ||
+                    selectedStatus === status;
+
+
+                const categoryMatch =
                     selectedCategory === "all" ||
-                    issueCategory === selectedCategory;
+                    selectedCategory === category;
 
-                return statusMatches && categoryMatches;
-            });
 
-            issuesContainer.innerHTML = "";
+                if (statusMatch && categoryMatch) {
 
-            if (filteredIssues.length === 0) {
-                emptyState.style.display = "block";
-                return;
-            }
+                    issue.style.display = "block";
 
-            emptyState.style.display = "none";
+                    visibleIssues++;
 
-            filteredIssues.forEach(issue => {
-                let statusClass = "reported";
-
-                if (issue.status === "Under Process") {
-                    statusClass = "progress";
                 }
 
-                if (issue.status === "Resolved") {
-                    statusClass = "resolved";
+                else {
+
+                    issue.style.display = "none";
+
                 }
 
-                const card = document.createElement("div");
-
-                card.className = "issue-card";
-
-                card.innerHTML = `
-                    <div class="issue-top">
-                        <div>
-                            <div class="issue-title">
-                                ${issue.category}
-                            </div>
-
-                            <div class="issue-location">
-                                📍 ${issue.block}, ${issue.floor}
-                            </div>
-                        </div>
-
-                        <span class="status ${statusClass}">
-                            ${issue.status}
-                        </span>
-                    </div>
-
-                    <p class="issue-description">
-                        ${issue.details}
-                    </p>
-
-                    <div class="issue-bottom">
-                        <span class="affected">
-                            👥 ${issue.affectedCount || 1} students affected
-                        </span>
-
-                        <a href="#" class="view-btn"
-                        onclick="viewIssue('${issue.id}'); return false;">
-                            View Details →
-                        </a>
-                    </div>
-                `;
-
-                issuesContainer.appendChild(card);
             });
+
+
+            emptyState.style.display =
+                visibleIssues === 0
+                    ? "block"
+                    : "none";
+
         }
 
-        function viewIssue(id) {
-            window.location.href =
-                `issue-details.html?id=${encodeURIComponent(id)}`;
-        }
 
-        statusFilter.addEventListener("change", renderIssues);
-        categoryFilter.addEventListener("change", renderIssues);
+        statusFilter.addEventListener(
+            "change",
+            filterIssues
+        );
 
-        renderIssues();
-            
+
+        categoryFilter.addEventListener(
+            "change",
+            filterIssues
+        );
+
     </script>
 
 </body>
+
 </html>
