@@ -37,6 +37,23 @@ function getComplaintById(id) {
 function addComplaint(complaint) {
   const complaints = getComplaints();
 
+  let studentId = localStorage.getItem('campusPulseStudentId');
+
+  if (!studentId) {
+    studentId =
+      'STU-' +
+      Date.now() +
+      '-' +
+      Math.random().toString(36).substring(2, 8);
+
+    localStorage.setItem(
+      'campusPulseStudentId',
+      studentId
+    );
+  }
+
+  complaint.reporterId = studentId;
+
   complaints.push(complaint);
 
   saveComplaints(complaints);
@@ -102,4 +119,19 @@ function markAffected(id) {
     message: 'You are now marked as affected.',
     affectedCount: complaint.affectedCount
   };
+}
+
+function getMyComplaints() {
+  const complaints = getComplaints();
+
+  const studentId =
+    localStorage.getItem('campusPulseStudentId');
+
+  if (!studentId) {
+    return [];
+  }
+
+  return complaints.filter(
+    complaint => complaint.reporterId === studentId
+  );
 }
