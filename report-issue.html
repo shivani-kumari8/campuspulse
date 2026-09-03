@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Campus Pulse | Report Issue</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+    :root {
+        --primary: #0284c7;
+        --primary-dark: #0369a1;
+        --bg: #f8fafc;
+        --card-bg: #ffffff;
+        --text-main: #0f172a;
+        --text-muted: #64748b;
+        --border: #e2e8f0;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+        background: var(--bg);
+        color: var(--text-main);
+    }
+
+
+    /* NAVBAR */
+
+    .navbar {
+        height: 70px;
+        background: white;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 7%;
+    }
+
+    .logo {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--primary);
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 28px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        color: var(--primary);
+    }
+
+    .profile {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+    }
+
+
+    /* MAIN */
+
+    .container {
+        max-width: 850px;
+        margin: auto;
+        padding: 40px 24px;
+    }
+
+    .page-header {
+        margin-bottom: 30px;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+        margin-bottom: 8px;
+    }
+
+    .page-header p {
+        color: var(--text-muted);
+    }
+
+
+    /* FORM CARD */
+
+    .form-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 30px;
+    }
+
+
+    /* FORM GROUP */
+
+    .form-group {
+        margin-bottom: 22px;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .required {
+        color: #dc2626;
+    }
+
+
+    /* INPUTS */
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+
+        width: 100%;
+
+        padding: 12px 14px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 8px;
+
+        font-size: 14px;
+
+        background: white;
+
+        color: var(--text-main);
+
+        outline: none;
+
+        transition: 0.2s;
+
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+
+        border-color: var(--primary);
+
+        box-shadow:
+            0 0 0 3px rgba(2, 132, 199, 0.08);
+
+    }
+
+    .form-group textarea {
+
+        min-height: 140px;
+
+        resize: vertical;
+
+        line-height: 1.6;
+
+    }
+
+    .form-hint {
+
+        color: var(--text-muted);
+
+        font-size: 12px;
+
+        margin-top: 6px;
+
+    }
+
+
+    /* TWO COLUMN */
+
+    .form-row {
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 16px;
+
+    }
+
+
+    /* SEVERITY */
+
+    .severity-options {
+
+        display: flex;
+
+        gap: 10px;
+
+        flex-wrap: wrap;
+
+    }
+
+    .severity-options input {
+
+        display: none;
+
+    }
+
+    .severity-options label {
+
+        padding: 9px 16px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 8px;
+
+        cursor: pointer;
+
+        font-size: 13px;
+
+        font-weight: 500;
+
+        color: var(--text-muted);
+
+        transition: 0.2s;
+
+    }
+
+    .severity-options label:hover {
+
+        border-color: var(--primary);
+
+        color: var(--primary);
+
+    }
+
+    .severity-options input:checked + label {
+
+        background: #f0f9ff;
+
+        border-color: var(--primary);
+
+        color: var(--primary);
+
+        font-weight: 600;
+
+    }
+
+
+    /* BUTTONS */
+
+    .form-actions {
+
+        border-top: 1px solid var(--border);
+
+        padding-top: 22px;
+
+        display: flex;
+
+        justify-content: flex-end;
+
+        gap: 12px;
+
+    }
+
+    .cancel-btn {
+
+        padding: 11px 20px;
+
+        border: 1px solid var(--border);
+
+        border-radius: 8px;
+
+        background: white;
+
+        color: var(--text-muted);
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+    }
+
+    .cancel-btn:hover {
+
+        background: #f8fafc;
+
+    }
+
+    .submit-btn {
+
+        padding: 11px 22px;
+
+        border: none;
+
+        border-radius: 8px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+    }
+
+    .submit-btn:hover {
+
+        background: var(--primary-dark);
+
+    }
+
+
+    /* SUCCESS MESSAGE */
+
+    .success-message {
+
+        display: none;
+
+        background: #f0fdf4;
+
+        border: 1px solid #bbf7d0;
+
+        color: #166534;
+
+        border-radius: 10px;
+
+        padding: 14px 16px;
+
+        margin-bottom: 22px;
+
+        font-size: 14px;
+
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 700px) {
+
+        .nav-links {
+            display: none;
+        }
+
+        .container {
+            padding: 25px 16px;
+        }
+
+        .form-card {
+            padding: 22px;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+            gap: 0;
+        }
+
+        .form-actions {
+            flex-direction: column-reverse;
+        }
+
+        .submit-btn,
+        .cancel-btn {
+            width: 100%;
+        }
+
+    }
+
+</style>
+
+</head>
+
+<body>
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        Campus Pulse
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="dashboard.html">
+            Dashboard
+        </a>
+
+        <a href="report-issue.html"
+           class="active">
+            Report Issue
+        </a>
+
+        <a href="my-issues.html">
+            My Issues
+        </a>
+
+        <a href="all-issues.html">
+            All Issues
+        </a>
+
+    </div>
+
+
+    <div class="profile">
+        N
+    </div>
+
+</nav>
+
+
+<!-- MAIN -->
+
+<main class="container">
+
+
+    <div class="page-header">
+
+        <h1>Report a Campus Issue</h1>
+
+        <p>
+            Help improve your campus by reporting an issue.
+        </p>
+
+    </div>
+
+
+    <!-- SUCCESS MESSAGE -->
+
+    <div class="success-message"
+         id="successMessage">
+
+        ✓ Your issue has been submitted successfully.
+
+    </div>
+
+
+    <!-- FORM -->
+
+    <form class="form-card"
+          id="issueForm">
+
+
+        <!-- CATEGORY + LOCATION -->
+
+        <div class="form-row">
+
+
+            <div class="form-group">
+
+                <label for="category">
+
+                    Category
+                    <span class="required">*</span>
+
+                </label>
+
+
+                <select id="category"
+                        required>
+
+                    <option value="">
+                        Select category
+                    </option>
+
+                    <option value="wifi">
+                        Wi-Fi
+                    </option>
+
+                    <option value="washroom">
+                        Washroom
+                    </option>
+
+                    <option value="electricity">
+                        Electrical
+                    </option>
+
+                    <option value="water">
+                        Water Supply
+                    </option>
+
+                    <option value="infrastructure">
+                        Infrastructure
+                    </option>
+
+                    <option value="mess">
+                        Mess / Food
+                    </option>
+
+                    <option value="classroom">
+                        Classroom
+                    </option>
+
+                    <option value="medical">
+                        Medical Facility
+                    </option>
+
+                    <option value="other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="location">
+
+                    Location
+                    <span class="required">*</span>
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="location"
+                    placeholder="e.g. Library, First Floor"
+                    required
+                >
+
+            </div>
+
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <div class="form-group">
+
+            <label for="title">
+
+                Issue Title
+                <span class="required">*</span>
+
+            </label>
+
+
+            <input
+                type="text"
+                id="title"
+                placeholder="Briefly describe the issue"
+                maxlength="100"
+                required
+            >
+
+
+            <div class="form-hint">
+
+                Keep the title short and clear.
+
+            </div>
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-group">
+
+            <label for="description">
+
+                Description
+                <span class="required">*</span>
+
+            </label>
+
+
+            <textarea
+                id="description"
+                placeholder="Describe the issue in detail. Include useful information such as when it started, how often it occurs, and how it affects students."
+                required
+            ></textarea>
+
+
+        </div>
+
+
+        <!-- SEVERITY -->
+
+        <div class="form-group">
+
+            <label>
+
+                Severity
+                <span class="required">*</span>
+
+            </label>
+
+
+            <div class="severity-options">
+
+
+                <input
+                    type="radio"
+                    id="low"
+                    name="severity"
+                    value="low"
+                    required
+                >
+
+                <label for="low">
+                    Low
+                </label>
+
+
+                <input
+                    type="radio"
+                    id="medium"
+                    name="severity"
+                    value="medium"
+                >
+
+                <label for="medium">
+                    Medium
+                </label>
+
+
+                <input
+                    type="radio"
+                    id="high"
+                    name="severity"
+                    value="high"
+                >
+
+                <label for="high">
+                    High
+                </label>
+
+
+                <input
+                    type="radio"
+                    id="critical"
+                    name="severity"
+                    value="critical"
+                >
+
+                <label for="critical">
+                    Critical
+                </label>
+
+
+            </div>
+
+
+            <div class="form-hint">
+
+                Choose the option that best represents the urgency of the issue.
+
+            </div>
+
+        </div>
+
+
+        <!-- AFFECTED STUDENTS -->
+
+        <div class="form-group">
+
+            <label for="affected">
+
+                Estimated Students Affected
+
+            </label>
+
+
+            <input
+                type="number"
+                id="affected"
+                min="1"
+                placeholder="e.g. 30"
+            >
+
+
+            <div class="form-hint">
+
+                If you're unsure, you can leave this blank.
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="form-actions">
+
+
+            <button
+                type="button"
+                class="cancel-btn"
+                onclick="window.location.href='dashboard.html'">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                type="submit"
+                class="submit-btn">
+
+                Submit Issue
+
+            </button>
+
+
+        </div>
+
+
+    </form>
+
+
+</main>
+
+
+<script>
+
+
+    const issueForm =
+        document.getElementById("issueForm");
+
+
+    const successMessage =
+        document.getElementById("successMessage");
+
+
+    issueForm.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+
+            successMessage.style.display =
+                "block";
+
+
+            issueForm.reset();
+
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+    );
+
+
+</script>
+
+</body>
+
+</html>
