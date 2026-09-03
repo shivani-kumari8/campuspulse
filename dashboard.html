@@ -11,6 +11,93 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        .severity-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .severity-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .severity-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .severity-card h3 {
+            font-size: 1.7rem;
+            margin: 8px 0 2px;
+        }
+
+        .severity-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .severity-progress {
+            height: 7px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .severity-progress div {
+            height: 100%;
+            border-radius: 20px;
+        }
+
+        .low-card {
+            background: #f0fdf4;
+        }
+
+        .low-card .severity-label {
+            color: #15803d;
+        }
+
+        .low-card .severity-progress div {
+            background: #22c55e;
+        }
+
+        .medium-card {
+            background: #fffbeb;
+        }
+
+        .medium-card .severity-label {
+            color: #b45309;
+        }
+
+        .medium-card .severity-progress div {
+            background: #f59e0b;
+        }
+
+        .high-card {
+            background: #fff7ed;
+        }
+
+        .high-card .severity-label {
+            color: #c2410c;
+        }
+
+        .high-card .severity-progress div {
+            background: #f97316;
+        }
+
+        .critical-card {
+            background: #fef2f2;
+        }
+
+        .critical-card .severity-label {
+            color: #b91c1c;
+        }
+
+        .critical-card .severity-progress div {
+            background: #ef4444;
+        }
         :root {
             --primary: #0284c7;
             --primary-dark: #0369a1;
@@ -303,6 +390,59 @@
 
         </section>
 
+        <section class="section">
+
+        <h2>Issue Severity Overview</h2>
+
+        <div class="severity-grid">
+
+            <div class="severity-card low-card">
+                <div>
+                    <span class="severity-label">LOW</span>
+                    <h3>25%</h3>
+                    <p>6 issues</p>
+                </div>
+                <div class="severity-progress">
+                    <div style="width: 25%;"></div>
+                </div>
+            </div>
+
+            <div class="severity-card medium-card">
+                <div>
+                    <span class="severity-label">MEDIUM</span>
+                    <h3>35%</h3>
+                    <p>8 issues</p>
+                </div>
+                <div class="severity-progress">
+                    <div style="width: 35%;"></div>
+                </div>
+            </div>
+
+            <div class="severity-card high-card">
+                <div>
+                    <span class="severity-label">HIGH</span>
+                    <h3>25%</h3>
+                    <p>6 issues</p>
+                </div>
+                <div class="severity-progress">
+                    <div style="width: 25%;"></div>
+                </div>
+            </div>
+
+            <div class="severity-card critical-card">
+                <div>
+                    <span class="severity-label">CRITICAL</span>
+                    <h3>15%</h3>
+                    <p>4 issues</p>
+                </div>
+                <div class="severity-progress">
+                    <div style="width: 15%;"></div>
+                </div>
+            </div>
+
+        </div>
+
+</section>
 
         <section class="section">
 
