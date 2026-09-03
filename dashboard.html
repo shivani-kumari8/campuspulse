@@ -8,11 +8,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -35,8 +31,56 @@
         body {
             background: var(--bg);
             color: var(--text-main);
-            min-height: 100vh;
         }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 70px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .profile {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* MAIN */
 
         .container {
             max-width: 1100px;
@@ -56,6 +100,8 @@
         .header p {
             color: var(--text-muted);
         }
+
+        /* STATS */
 
         .stats {
             display: grid;
@@ -82,6 +128,8 @@
             font-weight: 700;
         }
 
+        /* SECTIONS */
+
         .section {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -95,8 +143,14 @@
             margin-bottom: 22px;
         }
 
+        /* FACILITY HEALTH */
+
         .facility {
             margin-bottom: 18px;
+        }
+
+        .facility:last-child {
+            margin-bottom: 0;
         }
 
         .facility-header {
@@ -119,6 +173,8 @@
             background: var(--primary);
             border-radius: 20px;
         }
+
+        /* ISSUES */
 
         .issue {
             border: 1px solid var(--border);
@@ -170,12 +226,18 @@
         }
 
         @media (max-width: 750px) {
+
             .stats {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .nav-links {
+                gap: 15px;
+            }
         }
 
-        @media (max-width: 500px) {
+        @media (max-width: 550px) {
+
             .stats {
                 grid-template-columns: 1fr;
             }
@@ -183,11 +245,31 @@
             .container {
                 padding: 25px 16px;
             }
+
+            .nav-links {
+                display: none;
+            }
         }
     </style>
 </head>
 
 <body>
+
+    <nav class="navbar">
+
+        <div class="logo">Campus Pulse</div>
+
+        <div class="nav-links">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="report-issue.html">Report Issue</a>
+            <a href="my-issues.html">My Issues</a>
+            <a href="all-issues.html">All Issues</a>
+        </div>
+
+        <div class="profile">N</div>
+
+    </nav>
+
 
     <main class="container">
 
@@ -196,8 +278,6 @@
             <p>Overview of reported campus issues and facility health.</p>
         </header>
 
-
-        <!-- STATISTICS -->
 
         <section class="stats">
 
@@ -224,14 +304,11 @@
         </section>
 
 
-        <!-- FACILITY HEALTH -->
-
         <section class="section">
 
             <h2>Campus Facility Health</h2>
 
             <div class="facility">
-
                 <div class="facility-header">
                     <span>Washroom Hygiene</span>
                     <strong>78%</strong>
@@ -240,12 +317,10 @@
                 <div class="progress">
                     <div class="progress-bar" style="width: 78%;"></div>
                 </div>
-
             </div>
 
 
             <div class="facility">
-
                 <div class="facility-header">
                     <span>Water Supply</span>
                     <strong>85%</strong>
@@ -254,12 +329,10 @@
                 <div class="progress">
                     <div class="progress-bar" style="width: 85%;"></div>
                 </div>
-
             </div>
 
 
             <div class="facility">
-
                 <div class="facility-header">
                     <span>Electrical</span>
                     <strong>91%</strong>
@@ -268,12 +341,10 @@
                 <div class="progress">
                     <div class="progress-bar" style="width: 91%;"></div>
                 </div>
-
             </div>
 
 
             <div class="facility">
-
                 <div class="facility-header">
                     <span>Infrastructure</span>
                     <strong>74%</strong>
@@ -282,13 +353,10 @@
                 <div class="progress">
                     <div class="progress-bar" style="width: 74%;"></div>
                 </div>
-
             </div>
 
         </section>
 
-
-        <!-- RECENT ISSUES -->
 
         <section class="section">
 
@@ -297,9 +365,7 @@
             <div class="issue">
 
                 <div class="issue-header">
-                    <span class="issue-title">
-                        CP-104 — Broken Fan
-                    </span>
+                    <span class="issue-title">CP-104 — Broken Fan</span>
 
                     <span class="badge process">
                         Under Process
@@ -353,8 +419,6 @@
         </section>
 
     </main>
-
-    <script src="js/dashboard.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Campus Pulse | All Issues</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+        }
+
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 70px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .profile {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+
+        /* MAIN */
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 40px 24px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+        }
+
+
+        /* FILTERS */
+
+        .filters {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 24px;
+
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .filters input,
+        .filters select {
+
+            padding: 10px 14px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            background: white;
+
+        }
+
+        .filters input {
+            min-width: 260px;
+            flex: 1;
+        }
+
+
+        /* ISSUES */
+
+        .issues {
+            display: grid;
+            gap: 16px;
+        }
+
+        .issue-card {
+
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            transition: 0.2s;
+
+        }
+
+        .issue-card:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 6px 20px rgba(15, 23, 42, 0.06);
+
+        }
+
+
+        .issue-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+        }
+
+
+        .issue-title {
+
+            font-size: 1rem;
+
+            font-weight: 600;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .issue-location {
+
+            color: var(--text-muted);
+
+            font-size: 0.85rem;
+
+        }
+
+
+        .issue-description {
+
+            color: var(--text-muted);
+
+            line-height: 1.6;
+
+            font-size: 0.9rem;
+
+            margin: 16px 0;
+
+        }
+
+
+        .issue-bottom {
+
+            border-top:
+                1px solid var(--border);
+
+            padding-top: 14px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+        }
+
+
+        .affected {
+
+            font-size: 0.85rem;
+
+            color: var(--text-muted);
+
+        }
+
+
+        /* BADGES */
+
+        .badge {
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 0.75rem;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+        }
+
+
+        .waiting {
+
+            background: #fef3c7;
+
+            color: #92400e;
+
+        }
+
+
+        .process {
+
+            background: #e0f2fe;
+
+            color: #0369a1;
+
+        }
+
+
+        .resolved {
+
+            background: #dcfce7;
+
+            color: #15803d;
+
+        }
+
+
+        /* AFFECTED BUTTON */
+
+        .affected-btn {
+
+            padding: 9px 14px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #f0f9ff;
+
+            color: var(--primary);
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+        }
+
+        .affected-btn:hover {
+
+            background: #e0f2fe;
+
+        }
+
+
+        /* EMPTY */
+
+        .empty {
+
+            display: none;
+
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            padding: 50px;
+
+            text-align: center;
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                padding: 25px 16px;
+            }
+
+            .issue-top,
+            .issue-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filters input {
+                min-width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Campus Pulse
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="report-issue.html">
+                Report Issue
+            </a>
+
+            <a href="my-issues.html">
+                My Issues
+            </a>
+
+            <a href="all-issues.html"
+               class="active">
+                All Issues
+            </a>
+
+        </div>
+
+
+        <div class="profile">
+            N
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <main class="container">
+
+
+        <div class="page-header">
+
+            <h1>All Campus Issues</h1>
+
+            <p>
+                Explore and support issues reported across campus.
+            </p>
+
+        </div>
+
+
+        <!-- FILTERS -->
+
+        <div class="filters">
+
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search issues..."
+            >
+
+
+            <select id="statusFilter">
+
+                <option value="all">
+                    All Statuses
+                </option>
+
+                <option value="waiting">
+                    Waiting
+                </option>
+
+                <option value="process">
+                    Under Process
+                </option>
+
+                <option value="resolved">
+                    Resolved
+                </option>
+
+            </select>
+
+
+            <select id="categoryFilter">
+
+                <option value="all">
+                    All Categories
+                </option>
+
+                <option value="wifi">
+                    Wi-Fi
+                </option>
+
+                <option value="washroom">
+                    Washroom
+                </option>
+
+                <option value="electricity">
+                    Electrical
+                </option>
+
+                <option value="water">
+                    Water Supply
+                </option>
+
+                <option value="infrastructure">
+                    Infrastructure
+                </option>
+
+            </select>
+
+
+        </div>
+
+
+        <!-- ISSUES -->
+
+        <section class="issues"
+                 id="issues">
+
+
+            <!-- ISSUE 1 -->
+
+            <div class="issue-card"
+
+                 data-status="process"
+
+                 data-category="electricity">
+
+
+                <div class="issue-top">
+
+                    <div>
+
+                        <div class="issue-title">
+
+                            CP-104 — Broken Fan
+
+                        </div>
+
+
+                        <div class="issue-location">
+
+                            Engineering Block • Room 203
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="badge process">
+
+                        Under Process
+
+                    </span>
+
+
+                </div>
+
+
+                <p class="issue-description">
+
+                    The ceiling fan in Room 203 has not been working
+                    properly during lectures.
+
+                </p>
+
+
+                <div class="issue-bottom">
+
+                    <span class="affected">
+
+                        34 students affected
+
+                    </span>
+
+
+                    <button class="affected-btn">
+
+                        I'm Affected Too
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ISSUE 2 -->
+
+            <div class="issue-card"
+
+                 data-status="waiting"
+
+                 data-category="washroom">
+
+
+                <div class="issue-top">
+
+                    <div>
+
+                        <div class="issue-title">
+
+                            CP-103 — Washroom Hygiene
+
+                        </div>
+
+
+                        <div class="issue-location">
+
+                            Admin Block • Ground Floor
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="badge waiting">
+
+                        Waiting
+
+                    </span>
+
+
+                </div>
+
+
+                <p class="issue-description">
+
+                    Students have reported poor cleanliness and
+                    maintenance issues in the washroom.
+
+                </p>
+
+
+                <div class="issue-bottom">
+
+                    <span class="affected">
+
+                        56 students affected
+
+                    </span>
+
+
+                    <button class="affected-btn">
+
+                        I'm Affected Too
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ISSUE 3 -->
+
+            <div class="issue-card"
+
+                 data-status="resolved"
+
+                 data-category="water">
+
+
+                <div class="issue-top">
+
+                    <div>
+
+                        <div class="issue-title">
+
+                            CP-102 — Water Leakage
+
+                        </div>
+
+
+                        <div class="issue-location">
+
+                            Science Block B • 2nd Floor
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="badge resolved">
+
+                        Resolved
+
+                    </span>
+
+
+                </div>
+
+
+                <p class="issue-description">
+
+                    Water leakage near the laboratory corridor
+                    has been repaired.
+
+                </p>
+
+
+                <div class="issue-bottom">
+
+                    <span class="affected">
+
+                        21 students affected
+
+                    </span>
+
+
+                    <button class="affected-btn">
+
+                        I'm Affected Too
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ISSUE 4 -->
+
+            <div class="issue-card"
+
+                 data-status="waiting"
+
+                 data-category="wifi">
+
+
+                <div class="issue-top">
+
+                    <div>
+
+                        <div class="issue-title">
+
+                            CP-101 — Wi-Fi Connectivity Issue
+
+                        </div>
+
+
+                        <div class="issue-location">
+
+                            Library • First Floor
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="badge waiting">
+
+                        Waiting
+
+                    </span>
+
+
+                </div>
+
+
+                <p class="issue-description">
+
+                    Students are facing frequent Wi-Fi disconnections
+                    while studying in the library.
+
+                </p>
+
+
+                <div class="issue-bottom">
+
+                    <span class="affected">
+
+                        63 students affected
+
+                    </span>
+
+
+                    <button class="affected-btn">
+
+                        I'm Affected Too
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- EMPTY STATE -->
+
+        <div class="empty"
+             id="emptyState">
+
+            <h2>No issues found</h2>
+
+            <p>
+                Try changing your search or filters.
+            </p>
+
+        </div>
+
+
+    </main>
+
+
+    <script>
+
+
+        const searchInput =
+            document.getElementById("searchInput");
+
+
+        const statusFilter =
+            document.getElementById("statusFilter");
+
+
+        const categoryFilter =
+            document.getElementById("categoryFilter");
+
+
+        const issues =
+            document.querySelectorAll(".issue-card");
+
+
+        const emptyState =
+            document.getElementById("emptyState");
+
+
+        function filterIssues() {
+
+
+            const search =
+                searchInput.value.toLowerCase();
+
+
+            const status =
+                statusFilter.value;
+
+
+            const category =
+                categoryFilter.value;
+
+
+            let visible = 0;
+
+
+            issues.forEach(issue => {
+
+
+                const title =
+                    issue.querySelector(".issue-title")
+                    .textContent
+                    .toLowerCase();
+
+
+                const issueStatus =
+                    issue.dataset.status;
+
+
+                const issueCategory =
+                    issue.dataset.category;
+
+
+                const matchesSearch =
+                    title.includes(search);
+
+
+                const matchesStatus =
+                    status === "all" ||
+                    issueStatus === status;
+
+
+                const matchesCategory =
+                    category === "all" ||
+                    issueCategory === category;
+
+
+                if (
+
+                    matchesSearch &&
+                    matchesStatus &&
+                    matchesCategory
+
+                ) {
+
+
+                    issue.style.display = "block";
+
+
+                    visible++;
+
+
+                }
+
+                else {
+
+
+                    issue.style.display = "none";
+
+
+                }
+
+
+            });
+
+
+            emptyState.style.display =
+
+                visible === 0
+
+                ? "block"
+
+                : "none";
+
+
+        }
+
+
+        searchInput.addEventListener(
+
+            "input",
+
+            filterIssues
+
+        );
+
+
+        statusFilter.addEventListener(
+
+            "change",
+
+            filterIssues
+
+        );
+
+
+        categoryFilter.addEventListener(
+
+            "change",
+
+            filterIssues
+
+        );
+
+
+        /* I'M AFFECTED TOO BUTTON */
+
+
+        const affectedButtons =
+
+            document.querySelectorAll(".affected-btn");
+
+
+        affectedButtons.forEach(button => {
+
+
+            button.addEventListener(
+
+                "click",
+
+                function() {
+
+
+                    if (
+
+                        this.textContent.trim() ===
+                        "I'm Affected Too"
+
+                    ) {
+
+
+                        this.textContent =
+                            "✓ Marked as Affected";
+
+
+                        this.style.background =
+                            "#0284c7";
+
+
+                        this.style.color =
+                            "white";
+
+
+                    }
+
+                }
+
+            );
+
+
+        });
+
+
+    </script>
+
+
+</body>
+
+</html>
