@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Pulse | My Issues</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+
+            /* Severity Colors */
+            --sev-high-bg: #fee2e2;
+            --sev-high-text: #b91c1c;
+            --sev-med-bg: #ffedd5;
+            --sev-med-text: #c2410c;
+            --sev-low-bg: #f1f5f9;
+            --sev-low-text: #475569;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+        }
+
+        /* NAVBAR */
+        .navbar {
+            height: 70px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .profile {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* MAIN */
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 40px 24px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+        }
+
+        /* REPORT BUTTON */
+        .report-btn {
+            text-decoration: none;
+            background: var(--primary);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+
+        .report-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* FILTERS */
+        .filters {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 35px;
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .filters select {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .filters select:focus {
+            border-color: var(--primary);
+        }
+
+        .filters select {
+            flex: 1;
+            min-width: 180px;
+            cursor: pointer;
+        }
+
+        /* SECTION TITLE */
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        /* ISSUES */
+        .issues {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .issue-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+            transition: 0.2s;
+        }
+
+        .issue-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+        }
+
+        .issue-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .issue-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .issue-location {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .badge-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .issue-description {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.9rem;
+            margin: 16px 0;
+        }
+
+        /* SMALL PHOTO */
+        .issue-photo {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 12px;
+            display: block;
+        }
+
+        .issue-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+        }
+
+        .affected {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .affected strong {
+            color: var(--text-main);
+        }
+
+        .view-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .view-btn:hover {
+            color: var(--primary-dark);
+        }
+
+        /* BADGES */
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .waiting {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .process {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .resolved {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        /* Severity Badges */
+        .severity-high {
+            background: var(--sev-high-bg);
+            color: var(--sev-high-text);
+        }
+
+        .severity-medium {
+            background: var(--sev-med-bg);
+            color: var(--sev-med-text);
+        }
+
+        .severity-low {
+            background: var(--sev-low-bg);
+            color: var(--sev-low-text);
+        }
+
+        /* EMPTY / LOADING */
+        .empty,
+        .loading {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .empty {
+            display: none;
+        }
+
+        /* MOBILE */
+        @media (max-width: 700px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                padding: 25px 16px;
+            }
+
+            .page-header {
+                flex-direction: column;
+            }
+
+            .issue-top,
+            .issue-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .filters select {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <div class="logo">
+            Campus Pulse
+        </div>
+
+        <div class="nav-links">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="report-issue.html">
+                Report Issue
+            </a>
+
+            <a href="my-issues.html" class="active">
+                My Issues
+            </a>
+
+            <a href="all-issues.html">
+                All Issues
+            </a>
+
+        </div>
+
+        <div class="profile">
+            N
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+    <main class="container">
+
+
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    My Issues
+                </h1>
+
+                <p>
+                    Track the issues you reported and the issues you've supported.
+                </p>
+
+            </div>
+
+            <a
+                href="report-issue.html"
+                class="report-btn"
+            >
+                + Report Issue
+            </a>
+
+        </div>
+
+
+        <!-- FILTERS -->
+        <div class="filters">
+
+            <select id="statusFilter">
+
+                <option value="all">
+                    All Statuses
+                </option>
+
+                <option value="waiting">
+                    Waiting
+                </option>
+
+                <option value="process">
+                    Under Process
+                </option>
+
+                <option value="resolved">
+                    Resolved
+                </option>
+
+            </select>
+
+
+            <select id="categoryFilter">
+
+                <option value="all">
+                    All Categories
+                </option>
+
+                <option value="wifi">
+                    Wi-Fi
+                </option>
+
+                <option value="washroom">
+                    Washroom
+                </option>
+
+                <option value="electricity">
+                    Electrical
+                </option>
+
+                <option value="water">
+                    Water Supply
+                </option>
+
+                <option value="infrastructure">
+                    Infrastructure
+                </option>
+
+                <option value="mess">
+                    Mess
+                </option>
+
+                <option value="food">
+                    Food
+                </option>
+
+                <option value="classroom">
+                    Classroom
+                </option>
+
+            </select>
+
+
+            <select id="severityFilter">
+
+                <option value="all">
+                    All Severities
+                </option>
+
+                <option value="high">
+                    High Severity
+                </option>
+
+                <option value="medium">
+                    Medium Severity
+                </option>
+
+                <option value="low">
+                    Low Severity
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- =====================================================
+             ISSUES I REPORTED
+        ====================================================== -->
+
+        <h2 class="section-title">
+            Issues I Reported
+        </h2>
+
+        <section
+            class="issues"
+            id="reportedIssues"
+        >
+
+            <div class="loading">
+                Loading your issues...
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ISSUES I'M AFFECTED BY
+        ====================================================== -->
+
+        <h2 class="section-title">
+            Issues I'm Affected By
+        </h2>
+
+        <section
+            class="issues"
+            id="affectedIssues"
+        >
+
+        </section>
+
+
+        <!-- EMPTY STATE -->
+        <div
+            class="empty"
+            id="emptyState"
+        >
+
+            <h2>
+                No issues found
+            </h2>
+
+            <p>
+                Try changing your filters.
+            </p>
+
+        </div>
+
+
+    </main>
+
+
+    <script>
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const statusFilter =
+            document.getElementById("statusFilter");
+
+        const categoryFilter =
+            document.getElementById("categoryFilter");
+
+        const severityFilter =
+            document.getElementById("severityFilter");
+
+        const reportedIssues =
+            document.getElementById("reportedIssues");
+
+        const affectedIssues =
+            document.getElementById("affectedIssues");
+
+        const emptyState =
+            document.getElementById("emptyState");
+
+
+        /* =====================================================
+           ESCAPE HTML
+        ===================================================== */
+
+        function escapeHTML(value) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+                return "";
+            }
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        /* =====================================================
+           CAPITALIZE
+        ===================================================== */
+
+        function capitalize(text) {
+
+            if (!text) {
+                return "Low";
+            }
+
+            return text.charAt(0).toUpperCase() +
+                text.slice(1);
+
+        }
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        function getStatusClass(status) {
+
+            if (
+                status === "In Progress" ||
+                status === "Under Process"
+            ) {
+                return "process";
+            }
+
+            if (
+                status === "Waiting" ||
+                status === "Acknowledged"
+            ) {
+                return "waiting";
+            }
+
+            if (status === "Resolved") {
+                return "resolved";
+            }
+
+            return "waiting";
+
+        }
+
+
+        function getStatusText(status) {
+
+            if (status === "In Progress") {
+                return "Under Process";
+            }
+
+            if (status === "Acknowledged") {
+                return "Waiting";
+            }
+
+            return status;
+
+        }
+
+
+        /* =====================================================
+           CREATE REPORTED ISSUE CARD
+        ===================================================== */
+
+        function createIssueCard(issue) {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "issue-card";
+
+
+            card.dataset.status =
+                getStatusClass(issue.status);
+
+
+            card.dataset.category =
+                String(
+                    issue.category || "other"
+                ).toLowerCase();
+
+
+            card.dataset.severity =
+                String(
+                    issue.severity || "low"
+                ).toLowerCase();
+
+
+            let photoHTML = "";
+
+
+            if (issue.photo) {
+
+                photoHTML = `
+
+                    <img
+                        src="http://127.0.0.1:5000/uploads/${encodeURIComponent(issue.photo)}"
+                        alt="Issue Photo"
+                        class="issue-photo"
+                    >
+
+                `;
+
+            }
+
+
+            card.innerHTML = `
+
+                <div class="issue-top">
+
+                    <div>
+
+                        <div class="issue-title">
+
+                            CP-${issue.id}
+                            —
+                            ${escapeHTML(issue.title)}
+
+                        </div>
+
+                        <div class="issue-location">
+
+                            ${escapeHTML(issue.location)}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="badge-group">
+
+                        <span class="badge severity-${String(
+                            issue.severity || "low"
+                        ).toLowerCase()}">
+
+                            ${capitalize(issue.severity)}
+
+                        </span>
+
+
+                        <span class="badge ${getStatusClass(issue.status)}">
+
+                            ${getStatusText(issue.status)}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <p class="issue-description">
+
+                    ${escapeHTML(issue.description)}
+
+                </p>
+
+
+                ${photoHTML}
+
+
+                <div class="issue-bottom">
+
+                    <span class="affected">
+
+                        <strong>
+                            ${issue.affected_students || 0}
+                        </strong>
+
+                        students affected
+
+                    </span>
+
+
+                    <a
+                        href="#"
+                        class="view-btn"
+                    >
+
+                        View Issue →
+
+                    </a>
+
+                </div>
+
+            `;
+
+
+            return card;
+
+        }
+
+
+        /* =====================================================
+           HARDCODED DATA FROM ALL ISSUES PAGE
+
+           These CP numbers match your current All Issues page.
+        ===================================================== */
+
+        const allIssuesData = {
+
+            "CP-104": {
+
+                id: "CP-104",
+
+                title: "Broken Fan",
+
+                location:
+                    "Engineering Block • Room 203",
+
+                description:
+                    "The ceiling fan in Room 203 has not been working properly during lectures.",
+
+                severity: "high",
+
+                status: "Under Process",
+
+                category: "electricity",
+
+                affected_students: 35
+
+            },
+
+
+            "CP-103": {
+
+                id: "CP-103",
+
+                title: "Washroom Hygiene",
+
+                location:
+                    "Admin Block • Ground Floor",
+
+                description:
+                    "Students have reported poor cleanliness and maintenance issues in the washroom.",
+
+                severity: "high",
+
+                status: "Waiting",
+
+                category: "washroom",
+
+                affected_students: 57
+
+            },
+
+
+            "CP-102": {
+
+                id: "CP-102",
+
+                title: "Water Leakage",
+
+                location:
+                    "Science Block B • 2nd Floor",
+
+                description:
+                    "Water leakage near the laboratory corridor has been repaired.",
+
+                severity: "medium",
+
+                status: "Resolved",
+
+                category: "water",
+
+                affected_students: 22
+
+            },
+
+
+            "CP-101": {
+
+                id: "CP-101",
+
+                title:
+                    "Wi-Fi Connectivity Issue",
+
+                location:
+                    "Library • First Floor",
+
+                description:
+                    "Students are facing frequent Wi-Fi disconnections while studying in the library.",
+
+                severity: "low",
+
+                status: "Waiting",
+
+                category: "wifi",
+
+                affected_students: 64
+
+            }
+
+        };
+
+
+        /* =====================================================
+           GET AFFECTED ISSUES
+        ===================================================== */
+
+        function getAffectedIssueIds() {
+
+            try {
+
+                return JSON.parse(
+                    localStorage.getItem(
+                        "campus_affected_votes"
+                    )
+                ) || [];
+
+            }
+
+            catch (error) {
+
+                return [];
+
+            }
+
+        }
+
+
+        /* =====================================================
+           CREATE AFFECTED ISSUE CARD
+        ===================================================== */
+
+        function createAffectedIssueCard(issue) {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "issue-card";
+
+
+            card.dataset.status =
+                getStatusClass(issue.status);
+
+
+            card.dataset.category =
+                issue.category.toLowerCase();
+
+
+            card.dataset.severity =
+                issue.severity.toLowerCase();
+
+
+            card.innerHTML = `
+
+                <div class="issue-top">
+
+                    <div>
+
+                        <div class="issue-title">
+
+                            ${escapeHTML(issue.id)}
+                            —
+                            ${escapeHTML(issue.title)}
+
+                        </div>
+
+                        <div class="issue-location">
+
+                            ${escapeHTML(issue.location)}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="badge-group">
+
+                        <span class="badge severity-${issue.severity}">
+
+                            ${capitalize(issue.severity)}
+
+                        </span>
+
+
+                        <span class="badge ${getStatusClass(issue.status)}">
+
+                            ${getStatusText(issue.status)}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <p class="issue-description">
+
+                    ${escapeHTML(issue.description)}
+
+                </p>
+
+
+                <div class="issue-bottom">
+
+                    <span class="affected">
+
+                        <strong>
+                            ${issue.affected_students}
+                        </strong>
+
+                        students affected
+
+                    </span>
+
+
+                    <a
+                        href="#"
+                        class="view-btn"
+                    >
+
+                        View Issue →
+
+                    </a>
+
+                </div>
+
+            `;
+
+
+            return card;
+
+        }
+
+
+        /* =====================================================
+           LOAD AFFECTED ISSUES
+        ===================================================== */
+
+        function loadAffectedIssues() {
+
+            const savedIds =
+                getAffectedIssueIds();
+
+
+            affectedIssues.innerHTML = "";
+
+
+            const selectedIssues =
+                savedIds
+                    .map(id => allIssuesData[id])
+                    .filter(issue => issue);
+
+
+            if (selectedIssues.length === 0) {
+
+                affectedIssues.innerHTML = `
+
+                    <div class="loading">
+
+                        You haven't supported any issues yet.
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            selectedIssues.forEach(issue => {
+
+                affectedIssues.appendChild(
+                    createAffectedIssueCard(issue)
+                );
+
+            });
+
+
+            filterIssues();
+
+        }
+
+
+        /* =====================================================
+           FILTER ISSUES
+        ===================================================== */
+
+        function filterIssues() {
+
+            const selectedStatus =
+                statusFilter.value;
+
+            const selectedCategory =
+                categoryFilter.value;
+
+            const selectedSeverity =
+                severityFilter.value;
+
+
+            const cards =
+                document.querySelectorAll(
+                    ".issue-card"
+                );
+
+
+            let visibleCards = 0;
+
+
+            cards.forEach(card => {
+
+                const status =
+                    card.dataset.status;
+
+                const category =
+                    card.dataset.category;
+
+                const severity =
+                    card.dataset.severity;
+
+
+                const statusMatch =
+                    selectedStatus === "all" ||
+                    selectedStatus === status;
+
+
+                const categoryMatch =
+                    selectedCategory === "all" ||
+                    selectedCategory === category;
+
+
+                const severityMatch =
+                    selectedSeverity === "all" ||
+                    selectedSeverity === severity;
+
+
+                if (
+                    statusMatch &&
+                    categoryMatch &&
+                    severityMatch
+                ) {
+
+                    card.style.display = "block";
+
+                    visibleCards++;
+
+                }
+
+                else {
+
+                    card.style.display = "none";
+
+                }
+
+            });
+
+
+            emptyState.style.display =
+                visibleCards === 0
+                    ? "block"
+                    : "none";
+
+        }
+
+
+        /* =====================================================
+           LOAD REPORTED ISSUES FROM FLASK
+        ===================================================== */
+
+        async function loadMyIssues() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://127.0.0.1:5000/issues"
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Could not load issues"
+                    );
+
+                }
+
+
+                const allIssues =
+                    await response.json();
+
+
+                const myIds =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "myIssueIds"
+                        )
+                    ) || [];
+
+
+                const myIssues =
+                    allIssues.filter(issue =>
+
+                        myIds.includes(
+                            Number(issue.id)
+                        )
+
+                    );
+
+
+                reportedIssues.innerHTML = "";
+
+
+                if (myIssues.length === 0) {
+
+                    reportedIssues.innerHTML = `
+
+                        <div class="loading">
+
+                            You haven't reported any issues yet.
+
+                        </div>
+
+                    `;
+
+                }
+
+                else {
+
+                    myIssues.forEach(issue => {
+
+                        reportedIssues.appendChild(
+                            createIssueCard(issue)
+                        );
+
+                    });
+
+                }
+
+
+                filterIssues();
+
+            }
+
+            catch (error) {
+
+                console.error(error);
+
+
+                reportedIssues.innerHTML = `
+
+                    <div class="loading">
+
+                        Could not connect to Flask.
+
+                        <br><br>
+
+                        Make sure your Flask server is running.
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           FILTER EVENTS
+        ===================================================== */
+
+        statusFilter.addEventListener(
+            "change",
+            filterIssues
+        );
+
+
+        categoryFilter.addEventListener(
+            "change",
+            filterIssues
+        );
+
+
+        severityFilter.addEventListener(
+            "change",
+            filterIssues
+        );
+
+
+        /* =====================================================
+           UPDATE WHEN ALL ISSUES PAGE CHANGES
+        ===================================================== */
+
+        window.addEventListener(
+            "storage",
+            function(event) {
+
+                if (
+                    event.key ===
+                    "campus_affected_votes"
+                ) {
+
+                    loadAffectedIssues();
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           START
+        ===================================================== */
+
+        loadMyIssues();
+
+        loadAffectedIssues();
+
+    </script>
+
+</body>
+
+</html>

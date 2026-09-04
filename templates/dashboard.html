@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Campus Pulse | Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .severity-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .severity-card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .severity-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .severity-card h3 {
+            font-size: 1.7rem;
+            margin: 8px 0 2px;
+        }
+
+        .severity-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .severity-progress {
+            height: 7px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .severity-progress div {
+            height: 100%;
+            border-radius: 20px;
+        }
+
+        .low-card {
+            background: #f0fdf4;
+        }
+
+        .low-card .severity-label {
+            color: #15803d;
+        }
+
+        .low-card .severity-progress div {
+            background: #22c55e;
+        }
+
+        .medium-card {
+            background: #fffbeb;
+        }
+
+        .medium-card .severity-label {
+            color: #b45309;
+        }
+
+        .medium-card .severity-progress div {
+            background: #f59e0b;
+        }
+
+        .high-card {
+            background: #fff7ed;
+        }
+
+        .high-card .severity-label {
+            color: #c2410c;
+        }
+
+        .high-card .severity-progress div {
+            background: #f97316;
+        }
+
+        .critical-card {
+            background: #fef2f2;
+        }
+
+        .critical-card .severity-label {
+            color: #b91c1c;
+        }
+
+        .critical-card .severity-progress div {
+            background: #ef4444;
+        }
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-main);
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 70px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .profile {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* MAIN */
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 40px 24px;
+        }
+
+        .header {
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+        }
+
+        /* STATS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* SECTIONS */
+
+        .section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .section h2 {
+            font-size: 1.2rem;
+            margin-bottom: 22px;
+        }
+
+        /* FACILITY HEALTH */
+
+        .facility {
+            margin-bottom: 18px;
+        }
+
+        .facility:last-child {
+            margin-bottom: 0;
+        }
+
+        .facility-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+            font-size: 0.9rem;
+        }
+
+        .progress {
+            width: 100%;
+            height: 9px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 20px;
+        }
+
+        /* ISSUES */
+
+        .issue {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 12px;
+        }
+
+        .issue:last-child {
+            margin-bottom: 0;
+        }
+
+        .issue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .issue-title {
+            font-weight: 600;
+        }
+
+        .issue-location {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .waiting {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .process {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .resolved {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        @media (max-width: 750px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 25px 16px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">Campus Pulse</div>
+
+        <div class="nav-links">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="report-issue.html">Report Issue</a>
+            <a href="my-issues.html">My Issues</a>
+            <a href="all-issues.html">All Issues</a>
+        </div>
+
+        <div class="profile">N</div>
+
+    </nav>
+
+
+    <main class="container">
+
+        <header class="header">
+            <h1>Campus Dashboard</h1>
+            <p>Overview of reported campus issues and facility health.</p>
+        </header>
+
+
+        <section class="stats">
+
+            <div class="stat-card">
+                <h3>Total Issues</h3>
+                <div class="stat-number">24</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Waiting</h3>
+                <div class="stat-number">5</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Under Process</h3>
+                <div class="stat-number">8</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Resolved</h3>
+                <div class="stat-number">11</div>
+            </div>
+
+        </section>
+
+        <section class="section">
+
+        <h2>Issue Severity Overview</h2>
+
+        <div class="severity-grid">
+
+            <div class="severity-card low-card">
+                <div>
+                    <span class="severity-label">LOW</span>
+                    <h3>25%</h3>
+                    <p>6 issues</p>
+                </div>
+                <div class="severity-progress">
+                    <div style="width: 25%;"></div>
+                </div>
+            </div>
+
+            <div class="severity-card medium-card">
+                <div>
+                    <span class="severity-label">MEDIUM</span>
+                    <h3>35%</h3>
+                    <p>8 issues</p>
+                </div>
+                <div class="severity-progress">
+                    <div style="width: 35%;"></div>
+                </div>
+            </div>
+
+            <div class="severity-card high-card">
+                <div>
+                    <span class="severity-label">HIGH</span>
+                    <h3>25%</h3>
+                    <p>6 issues</p>
+                </div>
+                <div class="severity-progress">
+                    <div style="width: 25%;"></div>
+                </div>
+            </div>
+
+            <div class="severity-card critical-card">
+                <div>
+                    <span class="severity-label">CRITICAL</span>
+                    <h3>15%</h3>
+                    <p>4 issues</p>
+                </div>
+                <div class="severity-progress">
+                    <div style="width: 15%;"></div>
+                </div>
+            </div>
+
+        </div>
+
+</section>
+
+        <section class="section">
+
+            <h2>Campus Facility Health</h2>
+
+            <div class="facility">
+                <div class="facility-header">
+                    <span>Washroom Hygiene</span>
+                    <strong>78%</strong>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: 78%;"></div>
+                </div>
+            </div>
+
+
+            <div class="facility">
+                <div class="facility-header">
+                    <span>Water Supply</span>
+                    <strong>85%</strong>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: 85%;"></div>
+                </div>
+            </div>
+
+
+            <div class="facility">
+                <div class="facility-header">
+                    <span>Electrical</span>
+                    <strong>91%</strong>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: 91%;"></div>
+                </div>
+            </div>
+
+
+            <div class="facility">
+                <div class="facility-header">
+                    <span>Infrastructure</span>
+                    <strong>74%</strong>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar" style="width: 74%;"></div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <h2>Recent Campus Issues</h2>
+
+            <div class="issue">
+
+                <div class="issue-header">
+                    <span class="issue-title">CP-104 — Broken Fan</span>
+
+                    <span class="badge process">
+                        Under Process
+                    </span>
+                </div>
+
+                <div class="issue-location">
+                    Engineering Block • Room 203
+                </div>
+
+            </div>
+
+
+            <div class="issue">
+
+                <div class="issue-header">
+                    <span class="issue-title">
+                        CP-103 — Washroom Hygiene
+                    </span>
+
+                    <span class="badge waiting">
+                        Waiting
+                    </span>
+                </div>
+
+                <div class="issue-location">
+                    Admin Block • Ground Floor
+                </div>
+
+            </div>
+
+
+            <div class="issue">
+
+                <div class="issue-header">
+                    <span class="issue-title">
+                        CP-102 — Water Leakage
+                    </span>
+
+                    <span class="badge resolved">
+                        Resolved
+                    </span>
+                </div>
+
+                <div class="issue-location">
+                    Science Block B • 2nd Floor
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

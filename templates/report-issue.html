@@ -3,6 +3,7 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -36,7 +37,6 @@
         background: var(--bg);
         color: var(--text-main);
     }
-
 
     /* NAVBAR */
 
@@ -85,7 +85,6 @@
         font-weight: 600;
     }
 
-
     /* MAIN */
 
     .container {
@@ -107,7 +106,6 @@
         color: var(--text-muted);
     }
 
-
     /* FORM CARD */
 
     .form-card {
@@ -116,7 +114,6 @@
         border-radius: 14px;
         padding: 30px;
     }
-
 
     /* FORM GROUP */
 
@@ -134,7 +131,6 @@
     .required {
         color: #dc2626;
     }
-
 
     /* INPUTS */
 
@@ -193,7 +189,6 @@
 
     }
 
-
     /* TWO COLUMN */
 
     .form-row {
@@ -205,7 +200,6 @@
         gap: 16px;
 
     }
-
 
     /* SEVERITY */
 
@@ -264,7 +258,6 @@
         font-weight: 600;
 
     }
-
 
     /* BUTTONS */
 
@@ -330,7 +323,6 @@
 
     }
 
-
     /* SUCCESS MESSAGE */
 
     .success-message {
@@ -352,7 +344,6 @@
         font-size: 14px;
 
     }
-
 
     /* MOBILE */
 
@@ -391,6 +382,7 @@
 </head>
 
 <body>
+
 <!-- NAVBAR -->
 
 <nav class="navbar">
@@ -399,15 +391,13 @@
         Campus Pulse
     </div>
 
-
     <div class="nav-links">
 
         <a href="dashboard.html">
             Dashboard
         </a>
 
-        <a href="report-issue.html"
-           class="active">
+        <a href="report-issue.html" class="active">
             Report Issue
         </a>
 
@@ -421,7 +411,6 @@
 
     </div>
 
-
     <div class="profile">
         N
     </div>
@@ -432,7 +421,6 @@
 <!-- MAIN -->
 
 <main class="container">
-
 
     <div class="page-header">
 
@@ -447,8 +435,7 @@
 
     <!-- SUCCESS MESSAGE -->
 
-    <div class="success-message"
-         id="successMessage">
+    <div class="success-message" id="successMessage">
 
         ✓ Your issue has been submitted successfully.
 
@@ -457,14 +444,16 @@
 
     <!-- FORM -->
 
-    <form class="form-card"
-          id="issueForm">
+    <form
+        class="form-card"
+        id="issueForm"
+        enctype="multipart/form-data"
+    >
 
 
         <!-- CATEGORY + LOCATION -->
 
         <div class="form-row">
-
 
             <div class="form-group">
 
@@ -475,9 +464,11 @@
 
                 </label>
 
-
-                <select id="category"
-                        required>
+                <select
+                    id="category"
+                    name="category"
+                    required
+                >
 
                     <option value="">
                         Select category
@@ -533,16 +524,15 @@
 
                 </label>
 
-
                 <input
                     type="text"
                     id="location"
+                    name="location"
                     placeholder="e.g. Library, First Floor"
                     required
                 >
 
             </div>
-
 
         </div>
 
@@ -558,15 +548,14 @@
 
             </label>
 
-
             <input
                 type="text"
                 id="title"
+                name="title"
                 placeholder="Briefly describe the issue"
                 maxlength="100"
                 required
             >
-
 
             <div class="form-hint">
 
@@ -587,34 +576,40 @@
                 <span class="required">*</span>
 
             </label>
-                    <!-- PHOTO UPLOAD -->
+
+            <textarea
+                id="description"
+                name="description"
+                placeholder="Describe the issue in detail. Include useful information such as when it started, how often it occurs, and how it affects students."
+                required
+            ></textarea>
+
+        </div>
+
+
+        <!-- PHOTO UPLOAD -->
 
         <div class="form-group">
 
             <label for="issuePhoto">
+
                 Upload Photo
+
             </label>
 
             <input
                 type="file"
                 id="issuePhoto"
-                name="issuePhoto"
+                name="photo"
                 accept="image/*"
             >
 
             <div class="form-hint">
-                Upload a photo showing the issue. JPG, PNG, or other image formats are supported.
+
+                Upload a photo showing the issue.
+                JPG, PNG, or other image formats are supported.
+
             </div>
-
-        </div>
-
-
-            <textarea
-                id="description"
-                placeholder="Describe the issue in detail. Include useful information such as when it started, how often it occurs, and how it affects students."
-                required
-            ></textarea>
-
 
         </div>
 
@@ -630,9 +625,7 @@
 
             </label>
 
-
             <div class="severity-options">
-
 
                 <input
                     type="radio"
@@ -682,13 +675,12 @@
                     Critical
                 </label>
 
-
             </div>
-
 
             <div class="form-hint">
 
-                Choose the option that best represents the urgency of the issue.
+                Choose the option that best represents
+                the urgency of the issue.
 
             </div>
 
@@ -705,14 +697,13 @@
 
             </label>
 
-
             <input
                 type="number"
                 id="affected"
+                name="affected_students"
                 min="1"
                 placeholder="e.g. 30"
             >
-
 
             <div class="form-hint">
 
@@ -727,11 +718,11 @@
 
         <div class="form-actions">
 
-
             <button
                 type="button"
                 class="cancel-btn"
-                onclick="window.location.href='dashboard.html'">
+                onclick="window.location.href='dashboard.html'"
+            >
 
                 Cancel
 
@@ -740,55 +731,127 @@
 
             <button
                 type="submit"
-                class="submit-btn">
+                class="submit-btn"
+            >
 
                 Submit Issue
 
             </button>
-
 
         </div>
 
 
     </form>
 
-
 </main>
 
 
 <script>
 
+const issueForm =
+    document.getElementById("issueForm");
 
-    const issueForm =
-        document.getElementById("issueForm");
-
-
-    const successMessage =
-        document.getElementById("successMessage");
+const successMessage =
+    document.getElementById("successMessage");
 
 
-    issueForm.addEventListener(
-        "submit",
-        function(event) {
+issueForm.addEventListener(
+    "submit",
+    async function(event) {
 
-            event.preventDefault();
+        event.preventDefault();
+
+        // Collect all form fields + photo
+        const formData =
+            new FormData(issueForm);
+
+        try {
+
+            const response =
+                await fetch(
+                    "http://127.0.0.1:5000/submit-issue",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
 
 
-            successMessage.style.display =
-                "block";
+            const result =
+                await response.json();
 
 
-            issueForm.reset();
+            if (result.success) {
+
+                // --------------------------------
+                // SAVE ISSUE ID FOR MY ISSUES
+                // --------------------------------
+
+                let myIssueIds =
+                    JSON.parse(
+                        localStorage.getItem("myIssueIds")
+                    ) || [];
+
+                // Make sure we don't save duplicates
+                if (!myIssueIds.includes(result.issue_id)) {
+
+                    myIssueIds.push(result.issue_id);
+
+                }
+
+                localStorage.setItem(
+                    "myIssueIds",
+                    JSON.stringify(myIssueIds)
+                );
 
 
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
+                // --------------------------------
+                // SHOW SUCCESS MESSAGE
+                // --------------------------------
+
+                successMessage.textContent =
+                    `✓ Your issue has been submitted successfully. Issue ID: CP-${result.issue_id}`;
+
+                successMessage.style.display =
+                    "block";
+
+
+                issueForm.reset();
+
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+            }
+
+            else {
+
+                alert(
+                    result.message ||
+                    "Failed to submit the issue."
+                );
+
+            }
 
         }
-    );
 
+        catch (error) {
+
+            console.error(
+                "Error:",
+                error
+            );
+
+            alert(
+                "Could not connect to the Campus Pulse server. Make sure Flask is running."
+            );
+
+        }
+
+    }
+);
 
 </script>
 
